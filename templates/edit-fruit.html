@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <!-- Edit Fruit Form -->
+        <section id="edit">
+            <div class="form">
+                <h2>Edit Fruit</h2>
+                <form class="edit-form" method="post" action="{% url 'edit-fruit' pk=fruit.pk %}">
+                    <label for="name">Name:</label>
+                    {{ form.name }}
+                    <label for="Fruit-image">Image URL:</label>
+                    {{ form.image_url }}
+                    <label for="fruit-description">Description:</label>
+                    {{ form.description }}
+                    <label for="fruit-nutrition">Nutrition:</label>
+                    {{ form.nutrition }}
+                    {% csrf_token %}
+
+                    <button type="submit">Edit</button>
+                </form>
+            </div>
+        </section>
+{% endblock %}
