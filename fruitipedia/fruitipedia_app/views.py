@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect
 
 from fruitipedia.fruitipedia_app.models import Profile, Fruit
-from fruitipedia.fruitipedia_app.forms import ProfileForm, FruitForm, FruitDeleteForm, ProfileDeleteForm
+from fruitipedia.fruitipedia_app.forms import ProfileForm, FruitForm, FruitDeleteForm, ProfileDeleteForm, \
+    ProfileEditForm
 
 
 def index(request):
     """View function for the home page"""
     profile = Profile.objects.first()
+    hide_nav = True
 
     if profile:
         hide_nav = False
-    else:
-        hide_nav = True
 
     context = {
         'hide_nav': hide_nav,
@@ -121,7 +121,20 @@ def profile_details(request):
 
 def edit_profile(request):
     """View function for the profile edit page"""
-    return render(request, 'edit-profile.html')
+    profile = Profile.objects.first()
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'edit-profile.html', context)
 
 
 def delete_profile(request):

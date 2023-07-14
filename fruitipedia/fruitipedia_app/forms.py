@@ -21,6 +21,20 @@ class ProfileForm(forms.ModelForm):
         }
 
 
+class ProfileEditForm(forms.ModelForm):
+    """Form for the Profile edit page"""
+
+    class Meta:
+        model = Profile
+        exclude = ('email', 'password',)
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'First name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last name'}),
+            'image_url': forms.TextInput(attrs={'placeholder': 'Image URL'}),
+            'age': forms.NumberInput(attrs={'placeholder': 'Age'}),
+        }
+
+
 class ProfileDeleteForm(forms.ModelForm):
     """Form for the Profile model"""
 
@@ -64,4 +78,3 @@ class FruitDeleteForm(forms.ModelForm):
             'image_url': forms.TextInput(attrs={'placeholder': 'Fruit Image URL'}),
             'description': forms.Textarea(attrs={'placeholder': 'Fruit Description'}),
         }
-
